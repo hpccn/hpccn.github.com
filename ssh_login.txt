@@ -1,0 +1,26 @@
+Generating a new SSH key pair
+
+ssh-keygen -t rsa -C "your.email@example.com" -b 4096
+
+
+Working with non-default SSH key pair paths
+
+ssh-add ~/.ssh/other_id_rsa
+
+系统如果提示：Identity added: id_rsa (id_rsa) 就表明加载成功了
+
+下面有几个异常情况处理：
+
+–如果系统提示：could not open a connection to your authentication agent
+
+则需要执行一下命令：
+
+ssh-agent bash
+
+4 把公钥拷贝至Client服务器上
+
+很简单，例如 scp id_rsa.pub user@10.11.xx.xx:~
+
+5 ssh登录到Client服务器上，然后在Client服务器上，把公钥的内容追加到authorized_keys文件末尾（这个文件也在隐藏文件夹.ssh下，没有的话可以建立，没有关系）
+
+cat id_rsa.pub >> ~/.ssh/authorized_keys
